@@ -1,1 +1,1 @@
-Work will be completed by 26/May 11:59pm.
+Work will be completed by 26/June 11:59pm.
