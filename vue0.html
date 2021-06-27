@@ -1,0 +1,48 @@
+<!DOCTYPE HTML>
+<html lang="en-GB">
+	<head>
+	    <meta charset="utf-8">
+        <title>Vue.js BoardGame Prototype</title>
+        <meta name="description" content="Vue.js Prototyping" />
+		<meta name="keywords" content="Vue.js; Boardgame">
+        <meta name="author" content="Jalaluddin Qureshi">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		
+		<link href="style/main.css" rel="stylesheet">
+		
+		<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+	</head>
+	
+	
+	<!--
+	Documentation:
+	The concepts of vue_0 can be applied to the boardgame by displaying information about the game 
+	such as header, and any useful game-rule which the user would find helpful.
+	I am using an object variable and array to store the information.
+	-->
+	<body>
+	
+	
+		<main class="page-wrapper" id="app">
+			
+			<h1 class="center">{{header1}}</h1>
+			<p v-for="item in description" :key="item.message">
+				{{item.message}}
+			</p>
+		
+		</main>
+		
+		<script>
+		var app = new Vue({
+			el: '#app',
+			data:{
+				header1: 'Snake and Ladder Game',
+				description: [
+					{message: 'One hundred squares full of traps and tricks ... '},
+					{message: 'Roll the dice and try your luck! Ladders will take you up but Snakes will take you down!'},
+				]
+			}
+		});	
+		</script>
+	</body>
+</html>

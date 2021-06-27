@@ -1,0 +1,150 @@
+<!DOCTYPE HTML>
+<html lang="en-GB">
+	<head>
+	    <meta charset="utf-8">
+        <title>Vue.js BoardGame Prototype</title>
+        <meta name="description" content="Vue.js Prototyping" />
+		<meta name="keywords" content="Vue.js; Boardgame">
+        <meta name="author" content="Jalaluddin Qureshi">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		
+		<link href="style/main.css" rel="stylesheet">
+		
+		<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+	</head>
+	
+	<!--
+	Documentation:
+	In this html file I am extending on the work from vue5.html file.
+	
+	In this part, templates is used to create boxes. A total of 100
+	boxes are created adjacent to each other using the for loop.
+	This for loop updates the boxes array, which stores information such
+	as the x and y coordinates.
+	
+	-->
+	<body class="page-wrapper">
+		
+		<div id="app">
+		
+			<main>
+				
+				<h1 class="center">{{header1}}</h1>
+				<p v-for="item in description" :key="item.message">
+					{{item.message}}
+				</p>
+				
+				
+				<div>
+					<input type="submit" v-bind:value="btn_value" v-on:click="button_display();" class="button" v-if="btn_press<1">
+					
+					<input type="submit" v-bind:value="btn_value" v-on:click="roll_dice();" class="button" v-if="btn_press>=1" id="roll_dice">
+					
+					<p>
+						<!-- Shows the "Dice" image based on true/ false condition.-->
+						<img v-bind:src="image[1].src" v-bind:alt="image[1].alt" v-if="show_dice">
+						
+						<img v-bind:src="rolled_dice.img_src[dice_value]" v-bind:alt="rolled_dice.img_alt[dice_value]" v-if="btn_press>=2" id="rolling_dice">
+					</p>
+					
+					<section>
+					
+						<square_box
+							v-for="box in boxes"
+							v-bind:x="box.x"
+							v-bind:y="box.y"
+							v-bind:key="box.id"
+							>
+						</square_box>
+						
+					</section>
+				</div>
+			
+			</main>
+			
+			<aside>
+				<img v-bind:src="image[0].src" v-bind:alt="image[0].alt" id="snake-icon">
+				<h1 class="center">Historical Values</h1>
+				<p>
+					Start: <span v-for="value in historical" > {{value}}</span>
+				</p>
+			</aside>
+			
+		</div>
+		
+		<script>
+		
+		Vue.component(
+		'square_box',{
+			props:['x', 'y' ],
+			template:
+			`<span 
+				v-bind:class="'box'" 
+				v-bind:style="{'top':y+'px', 'left':x+'px'}">
+			</span>`,
+			
+		});
+		
+		var app = new Vue({
+			el: '#app',
+			data:{
+				header1: 'Snake and Ladder Game',
+				show_dice: false,
+				dice_value:0,
+				btn_press: 0,
+				btn_value: 'Show Dice',
+				description: [
+					{message: 'One hundred squares full of traps and tricks ... '},
+					{message: 'Roll the dice and try your luck! Ladders will take you up but Snakes will take you down!'},
+				],
+				//Using list to store particulars about images, as there may be multiple images to display (Extensionabilty).
+				image: [
+					{src : 'images/snake.png', alt : "Icon of Snake-Ladder board game."},
+					{src : 'images/dice.png', alt : "Icon of a dice."},
+				],
+				
+				historical:  [], //initialized as an empty array.
+				
+				two_colors: [ '#aba8ff', '#ffbaa8'],
+				
+				rolled_dice: {
+					img_src: ["images/d1.png", "images/d2.png", "images/d3.png", "images/d4.png", "images/d5.png", "images/d6.png"],
+					img_alt: ["Dice with one dot.", "Dice with two dots.", "Dice with three dots.", "Dice with four dots.", "Dice with five dots.", "Dice with six dots."],
+				},
+				
+				boxes: [ ],
+			},
+			methods: {
+				button_display: function() {
+					this.show_dice = true;
+					this.btn_value = 'Roll Dice';
+					this.btn_press++;
+				},
+				
+				roll_dice: function() {
+					this.dice_value = Math.ceil(Math.random() * 6)-1;
+					app.historical.push(this.dice_value+1);
+					this.btn_press++;
+					
+				},
+			}
+		});	
+		
+		let x_coor = 0;
+		let y_coor = 0;
+		for (let i = 0; i < 100; i++) { 
+			
+			if (i%10==0) {
+				y_coor += 40;
+				x_coor = 0;
+			}
+			
+			app.boxes.push({id: i, x: x_coor, y: y_coor});
+			x_coor += 40;
+		}
+		console.log(app.boxes);
+				
+		console.log(app.show_dice);
+		</script>
+	</body>
+</html>

@@ -1,0 +1,99 @@
+<!DOCTYPE HTML>
+<html lang="en-GB">
+	<head>
+	    <meta charset="utf-8">
+        <title>Vue.js BoardGame Prototype</title>
+        <meta name="description" content="Vue.js Prototyping" />
+		<meta name="keywords" content="Vue.js; Boardgame">
+        <meta name="author" content="Jalaluddin Qureshi">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		
+		<link href="style/main.css" rel="stylesheet">
+		
+		<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+	</head>
+	
+	<!--
+	Documentation:
+	In this html file I am extending on the work from vue2.html file.
+	
+	Use the rolled_dice object to store information about different images and their
+	alternate description. 
+	Used conditional rendering to display value of the dice, which is fetched from the 
+	roll_dice function. The roll_dice function returns a random number between the
+	interval of 1-6, based on which it is evalauted which dice icon to display.
+	
+	-->
+	<body class="page-wrapper">
+		
+		<div id="app">
+		
+			<main>
+				
+				<h1 class="center">{{header1}}</h1>
+				<p v-for="item in description" :key="item.message">
+					{{item.message}}
+				</p>
+				
+				
+				<div>
+					<input type="submit" v-bind:value="btn_value" v-on:click="button_display(); roll_dice();" class="button">
+					<p>
+						<!-- Shows the "Dice" image based on true/ false condition.-->
+						<img v-bind:src="image[1].src" v-bind:alt="image[1].alt" v-if="show_dice">
+						
+						<img v-bind:src="rolled_dice.img_src[dice_value]" v-bind:alt="rolled_dice.img_alt[dice_value]" v-if="btn_press>1">
+					</p>
+				</div>
+			
+			</main>
+			
+			<aside>
+				<img v-bind:src="image[0].src" v-bind:alt="image[0].alt" id="snake-icon">
+			</aside>
+			
+		</div>
+		
+		<script>
+		var app = new Vue({
+			el: '#app',
+			data:{
+				header1: 'Snake and Ladder Game',
+				show_dice: false,
+				dice_value:0,
+				btn_press: 0,
+				btn_value: 'Show Dice',
+				description: [
+					{message: 'One hundred squares full of traps and tricks ... '},
+					{message: 'Roll the dice and try your luck! Ladders will take you up but Snakes will take you down!'},
+				],
+				//Using list to store particulars about images, as there may be multiple images to display (Extensionabilty).
+				image: [
+					{src : 'images/snake.png', alt : "Icon of Snake-Ladder board game."},
+					{src : 'images/dice.png', alt : "Icon of a dice."},
+				],
+				
+				rolled_dice: {
+					img_src: ["images/d1.png", "images/d2.png", "images/d3.png", "images/d4.png", "images/d5.png", "images/d6.png"],
+					img_alt: ["Dice with one dot.", "Dice with two dots.", "Dice with three dots.", "Dice with four dots.", "Dice with five dots.", "Dice with six dots."],
+					dice_value: 0,
+				}
+			},
+			methods: {
+				button_display: function() {
+					this.show_dice = true;
+					this.btn_value = 'Roll Dice';
+					this.btn_press++;
+				},
+				
+				roll_dice: function() {
+					this.dice_value = Math.ceil(Math.random() * 6)-1;
+					console.log(this.dice_value);
+				},
+			}
+		});	
+		
+		console.log(app.show_dice);
+		</script>
+	</body>
+</html>

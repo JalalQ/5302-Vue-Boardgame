@@ -1,0 +1,82 @@
+<!DOCTYPE HTML>
+<html lang="en-GB">
+	<head>
+	    <meta charset="utf-8">
+        <title>Vue.js BoardGame Prototype</title>
+        <meta name="description" content="Vue.js Prototyping" />
+		<meta name="keywords" content="Vue.js; Boardgame">
+        <meta name="author" content="Jalaluddin Qureshi">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		
+		<link href="style/main.css" rel="stylesheet">
+		
+		<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+	</head>
+	
+	<!--
+	Documentation:
+	In this html file I am extending on the work from vue1.html file.
+	The new addition include using conditional rendering and changing the
+	truth logical value based on user event. By using the conditional rendering
+	the "throw icon" icon is displayed once the user clicks on "Show Dice"
+	button. 
+	After the user has clicked on the "Show Dice" button, its value changes
+	to "Roll Dice".
+	
+	-->
+	<body class="page-wrapper">
+		
+		<div id="app">
+		
+			<main>
+				
+				<h1 class="center">{{header1}}</h1>
+				<p v-for="item in description" :key="item.message">
+					{{item.message}}
+				</p>
+				
+				<!-- Shows the "Dice" button based on true/ false condition.-->
+				<div>
+					<input type="submit" v-bind:value="btn_value" v-on:click="button_display();" class="button">
+					<p>
+						<img v-bind:src="image[1].src" v-bind:alt="image[1].alt" v-if="show_dice">
+					</p>
+				</div>
+			
+			</main>
+			
+			<aside>
+				<img v-bind:src="image[0].src" v-bind:alt="image[0].alt" id="snake-icon">
+			</aside>
+			
+		</div>
+		
+		<script>
+		var app = new Vue({
+			el: '#app',
+			data:{
+				header1: 'Snake and Ladder Game',
+				show_dice: false,
+				btn_value: 'Show Dice',
+				description: [
+					{message: 'One hundred squares full of traps and tricks ... '},
+					{message: 'Roll the dice and try your luck! Ladders will take you up but Snakes will take you down!'},
+				],
+				//Using list to store particulars about images, as there may be multiple images to display (Extensionabilty).
+				image: [
+					{src : 'images/snake.png', alt : "Icon of Snake-Ladder board game."},
+					{src : 'images/dice.png', alt : "Icon of a dice."},
+				]
+			},
+			methods: {
+				button_display: function() {
+					this.show_dice = true;
+					this.btn_value = 'Roll Dice';
+				}
+			}
+		});	
+		
+		console.log(app.show_dice);
+		</script>
+	</body>
+</html>

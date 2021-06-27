@@ -1,0 +1,62 @@
+<!DOCTYPE HTML>
+<html lang="en-GB">
+	<head>
+	    <meta charset="utf-8">
+        <title>Vue.js BoardGame Prototype</title>
+        <meta name="description" content="Vue.js Prototyping" />
+		<meta name="keywords" content="Vue.js; Boardgame">
+        <meta name="author" content="Jalaluddin Qureshi">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		
+		<link href="style/main.css" rel="stylesheet">
+		
+		<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+	</head>
+	
+	<!--
+	Documentation:
+	In this html file I am extending on the work from vue0.html file.
+	In this file I am using the idea from vue_1.html to add an image, which
+	would improve the aesthetic of the display.
+	Extensionabilty: I am using list to save particulars about image, as in 
+	the future I may need to add more images.
+	-->
+	<body class="page-wrapper">
+		
+		<div id="app">
+		
+			<main>
+				
+				<h1 class="center">{{header1}}</h1>
+				<p v-for="item in description" :key="item.message">
+					{{item.message}}
+				</p>
+			
+			</main>
+			
+			<aside>
+				<img v-bind:src="image[0].src" v-bind:alt="image[0].alt">
+			</aside>
+			
+		</div>
+		
+		<script>
+		var app = new Vue({
+			el: '#app',
+			data:{
+				header1: 'Snake and Ladder Game',
+				description: [
+					{message: 'One hundred squares full of traps and tricks ... '},
+					{message: 'Roll the dice and try your luck! Ladders will take you up but Snakes will take you down!'},
+				],
+				//Using list to store particulars about images, as there may be multiple images to display (Extensionabilty).
+				image: [
+					{src : 'images/snake.png', alt : "Icon of Snake-Ladder board game."},
+				]
+			}
+		});	
+		
+		//console.log(app.image);
+		</script>
+	</body>
+</html>
