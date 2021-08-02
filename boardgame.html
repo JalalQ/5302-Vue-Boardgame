@@ -1,11 +1,11 @@
 <!DOCTYPE HTML>
 <html lang="en-GB">
 	<head>
-	    <meta charset="utf-8">
-        <title>Vue.js BoardGame Prototype</title>
-        <meta name="description" content="Vue.js Prototyping" />
+	    	<meta charset="utf-8">
+        	<title>Vue.js BoardGame Prototype</title>
+        	<meta name="description" content="Vue.js Prototyping" />
 		<meta name="keywords" content="Vue.js; Boardgame">
-        <meta name="author" content="Jalaluddin Qureshi">
+        	<meta name="author" content="Jalaluddin Qureshi">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		
 		<link href="style/main.css" rel="stylesheet">
@@ -63,7 +63,8 @@
 						</square_box>
 						
 						
-						<img v-bind:src="image[2].src" v-bind:alt="image[2].alt" v-bind:style="{'top':horse[0].y+'px', 'left':horse[0].x+'px'}" id="horse">
+						<img v-bind:src="image[2].src" v-bind:alt="image[2].alt" 
+						     v-bind:style="{'top':horse[0].y+'px', 'left':horse[0].x+'px'}" id="horse">
 						
 						
 					</section>
@@ -89,9 +90,9 @@
 			template:
 			`<span 
 				v-bind:class="'box'" 
-				v-bind:style="{'top':y+'px', 'left':x+'px'}"
+				v-bind:style="{'top':y+'px', 'left':x+'px'}" //absolute position, see style/main.css
 				>
-				{{id+1}}
+				{{id+1}} //prints the numbers in the box.
 			</span>`,
 			
 		});
@@ -116,18 +117,21 @@
 					{src : 'images/horse.png', alt : "Icon of a horse."},
 				],
 				
-				horse: [{x:1, y:1}], //the x and y coordinate of the 
+				horse: [{x:1, y:1}], //the x and y coordinate of the horse "icon".
 				
-				historical:  [], //initialized as an empty array.
+				historical:  [], //initialized as an empty array. Stores the value of the past values of the dice.
 				
 				two_colors: [ '#aba8ff', '#ffbaa8'],
 				
+				//object with two arrays to store image and alt description of the image.
 				rolled_dice: {
 					img_src: ["images/d1.png", "images/d2.png", "images/d3.png", "images/d4.png", "images/d5.png", "images/d6.png"],
 					img_alt: ["Dice with one dot.", "Dice with two dots.", "Dice with three dots.", "Dice with four dots.", "Dice with five dots.", "Dice with six dots."],
 				},
 				
-				boxes: [ ],
+				//Each of the box has three values, id, x-coord, and y-coord. 
+				//These values are then passed on the square_box template, using a for loop in the html.
+				boxes: [ ], 
 			},
 			methods: {
 				button_display: function() {
@@ -143,6 +147,7 @@
 					app.historical.push(this.dice_value+1);
 					this.btn_press++;
 					
+					//if the "horse" has not reached the end of the board game last box
 					if (this.dice_value+1+this.current_loc<100) {
 					
 						this.current_loc += this.dice_value+1;
